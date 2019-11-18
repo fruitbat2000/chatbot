@@ -1,17 +1,21 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <component :is="currentView" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Chatbot from './components/chatbot/Chatbot.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Chatbot
+  },
+  data() {
+    return {
+      currentView: 'Chatbot'
+    }
   }
 }
 </script>
