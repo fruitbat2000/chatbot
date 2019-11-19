@@ -1,30 +1,52 @@
 <template>
   <div class="home">
-    <h1>Home</h1>
-    <nav>
-      <ul>
-        <li><a href="" @click.prevent="navigate('Chatbot')">Ask me a question</a></li>
-        <li><a href="" @click.prevent="navigate('MentalHealthOptions')">Everything is awful and I'm not OK</a></li>
-      </ul>
-    </nav>
+    <h2>Hi, how can we help?</h2>
+    <p>Commonly asked questions:</p>
+    <ul>
+      <li v-for="(q, i) in commonlyAsked" :key="i">
+        <a href="" @click.prevent="submitQuestion(q)">{{ q }}</a>
+      </li>
+    </ul>
+    <p>Or... ask me something!</p>
+    <input
+      v-model="query"
+      type="text"
+      placeholder="type your question here..."
+      @keyup.enter="submitQuestion(false)"
+    />
+    <button class="button" @click="submitQuestion(false)">
+      Submit
+    </button>
+
+    <a href="" class="button" @click.prevent="navigate('MentalHealthOptions')">
+      Help! Everything is awful and I'm not OK!
+    </a>
   </div>
 </template>
 
 <script>
+import { ref } from '@vue/composition-api'
+
 export default {
   name: 'Home',
   setup(props, context) {
-    const store = context.root.$store;
+    const store = context.root.$store
+    const query = ref('')
+    const commonlyAsked = ref(store.state.commonlyAsked)
 
     function navigate(destination) {
       store.commit('navigate', destination)
     }
 
-    return { navigate }
+    function submitQuestion(q) {
+      const question = q ? q : query.value
+      console.log(question)
+    }
+
+    return { navigate, query, submitQuestion, commonlyAsked }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

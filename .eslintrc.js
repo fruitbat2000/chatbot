@@ -22,7 +22,7 @@ module.exports = {
       {
         html: {
           void: 'any',
-          normal: 'always',
+          normal: 'never',
           component: 'always'
         }
       }
