@@ -6,16 +6,28 @@
 
 <script>
 import Chatbot from './components/chatbot/Chatbot.vue'
+import Home from './components/Home.vue'
+import MentalHealthOptions from './components/MentalHealthOptions.vue'
+import Cbt from './components/cbt/Cbt.vue'
+import Breathe from './components/breathe/Breathe.vue'
+import {reactive, computed, toRefs, ref} from '@vue/composition-api'
+import {useState} from '@u3u/vue-hooks'
 
 export default {
   name: 'App',
   components: {
-    Chatbot
+    Home,
+    Chatbot,
+    MentalHealthOptions,
+    Cbt,
+    Breathe
   },
-  data() {
-    return {
-      currentView: 'Chatbot'
+  setup(props, context) {
+    const state = {
+      ...useState(['currentView', 'chatbotOpen'])
     }
+
+    return { ...state }
   }
 }
 </script>

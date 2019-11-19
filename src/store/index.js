@@ -5,12 +5,19 @@ import cbt from './modules/cbt'
 import breathe from './modules/breathe'
 
 Vue.use(Vuex)
+const debug = process.env.NODE_ENV === 'development'
 
 export default new Vuex.Store({
   state: {
-    currentView: 'chatbot'
+    currentView: 'Home',
+    chatbotOpen: false
   },
-  mutations: {},
+  mutations: {
+    navigate(state, payload) {
+      debug && console.log('navigate', state, payload)
+      state.currentView = payload
+    }
+  },
   actions: {},
   modules: {
     cbt,
