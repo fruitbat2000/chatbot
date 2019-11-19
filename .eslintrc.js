@@ -8,7 +8,7 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'vue/max-attributes-per-line': [
-      2,
+      1,
       {
         singleline: 3,
         multiline: {
@@ -17,6 +17,7 @@ module.exports = {
         }
       }
     ],
+    'vue/html-closing-bracket-newline': false,
     'vue/html-self-closing': [
       2,
       {

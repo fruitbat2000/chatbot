@@ -14,9 +14,15 @@
       placeholder="type your question here..."
       @keyup.enter="submitQuestion(false)"
     />
-    <button class="button" @click="submitQuestion(false)">
-      Submit
-    </button>
+    <v-btn 
+      fab 
+      small
+      color="#750087" 
+      @click="submitQuestion(false)">
+      <v-icon color="#fff">
+        mdi-magnify
+      </v-icon>
+    </v-btn>
 
     <a href="" class="button" @click.prevent="navigate('MentalHealthOptions')">
       Help! Everything is awful and I'm not OK!
