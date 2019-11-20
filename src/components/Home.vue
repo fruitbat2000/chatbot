@@ -7,21 +7,21 @@
         <a href @click.prevent="submitQuestion(q)">{{ q }}</a>
       </li>
     </ul>
-    <p>Or... ask me something!</p>
-    <input
+    <v-text-field
       v-model="query"
+      label="Or ask me something!"
+      outlined
       type="text"
       placeholder="type your question here..."
+      append-icon="mdi-send"
       @keyup.enter="submitQuestion(false)"
     />
-    <v-btn fab small color="secondary" @click="submitQuestion(false)">
-      <v-icon dark>mdi-magnify</v-icon>
-    </v-btn>
 
     <v-btn
       color="primary"
       ripple
       href
+      rounded
       @click.prevent="navigate('MentalHealthOptions')"
     >
       Help! Everything is awful and I'm not OK!

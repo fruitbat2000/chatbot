@@ -12,7 +12,6 @@ import Home from './components/Home.vue'
 import MentalHealthOptions from './components/MentalHealthOptions.vue'
 import Cbt from './components/cbt/Cbt.vue'
 import Breathe from './components/breathe/Breathe.vue'
-import { reactive, computed, toRefs, ref } from '@vue/composition-api'
 import { useState } from '@u3u/vue-hooks'
 
 export default {
@@ -24,7 +23,7 @@ export default {
     Cbt,
     Breathe
   },
-  setup(props, context) {
+  setup() {
     const state = {
       ...useState(['currentView', 'chatbotOpen'])
     }
@@ -39,5 +38,6 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding: 2rem;
 }
 </style>
