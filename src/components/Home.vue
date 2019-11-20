@@ -4,7 +4,7 @@
     <p>Commonly asked questions:</p>
     <ul>
       <li v-for="(q, i) in commonlyAsked" :key="i">
-        <a href="" @click.prevent="submitQuestion(q)">{{ q }}</a>
+        <a href @click.prevent="submitQuestion(q)">{{ q }}</a>
       </li>
     </ul>
     <p>Or... ask me something!</p>
@@ -14,19 +14,18 @@
       placeholder="type your question here..."
       @keyup.enter="submitQuestion(false)"
     />
-    <v-btn 
-      fab 
-      small
-      color="#750087" 
-      @click="submitQuestion(false)">
-      <v-icon color="#fff">
-        mdi-magnify
-      </v-icon>
+    <v-btn fab small color="secondary" @click="submitQuestion(false)">
+      <v-icon dark>mdi-magnify</v-icon>
     </v-btn>
 
-    <a href="" class="button" @click.prevent="navigate('MentalHealthOptions')">
+    <v-btn
+      color="primary"
+      ripple
+      href
+      @click.prevent="navigate('MentalHealthOptions')"
+    >
       Help! Everything is awful and I'm not OK!
-    </a>
+    </v-btn>
   </div>
 </template>
 

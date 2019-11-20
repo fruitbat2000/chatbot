@@ -3,31 +3,10 @@ module.exports = {
   env: {
     node: true
   },
-  extends: ['plugin:vue/recommended'],
+  extends: ['plugin:vue/essential', '@vue/prettier'],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'vue/max-attributes-per-line': [
-      1,
-      {
-        singleline: 3,
-        multiline: {
-          max: 1,
-          allowFirstLine: false
-        }
-      }
-    ],
-    'vue/html-closing-bracket-newline': false,
-    'vue/html-self-closing': [
-      2,
-      {
-        html: {
-          void: 'any',
-          normal: 'never',
-          component: 'always'
-        }
-      }
-    ]
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   },
   parserOptions: {
     parser: 'babel-eslint'
