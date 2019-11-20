@@ -10,11 +10,13 @@
     <v-text-field
       v-model="query"
       label="Or ask me something!"
+      color="secondary"
       outlined
       type="text"
       placeholder="type your question here..."
       append-icon="mdi-send"
       @keyup.enter="submitQuestion(false)"
+      @click:append="submitQuestion(false)"
     />
 
     <v-btn
@@ -24,8 +26,9 @@
       rounded
       @click.prevent="navigate('MentalHealthOptions')"
     >
-      Help! Everything is awful and I'm not OK!
+      Help!
     </v-btn>
+    <span class="secondary--text">Everything is awful and I'm not OK!</span>
   </div>
 </template>
 
