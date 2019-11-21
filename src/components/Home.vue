@@ -1,34 +1,46 @@
 <template>
   <div class="home">
-    <h2>Hi, how can we help?</h2>
-    <p>Commonly asked questions:</p>
-    <ul>
-      <li v-for="(q, i) in commonlyAsked" :key="i">
-        <a href @click.prevent="submitQuestion(q)">{{ q }}</a>
-      </li>
-    </ul>
-    <v-text-field
-      v-model="query"
-      label="Or ask me something!"
-      color="secondary"
-      outlined
-      type="text"
-      placeholder="type your question here..."
-      append-icon="mdi-send"
-      @keyup.enter="submitQuestion(false)"
-      @click:append="submitQuestion(false)"
-    />
+    <section class="home__content">
+      <h2 class="primary--text">Hi, how can I help?</h2>
+      <p>
+        I'm a chatbot and I'll do my best to answer your questions, but if I
+        can't you can still contact a real person using the contact info here.
+        If you're in any immediate danger, please call the police!
+      </p>
+      <h3>Commonly asked questions:</h3>
+      <ul>
+        <li v-for="(q, i) in commonlyAsked" :key="i">
+          <a href @click.prevent="submitQuestion(q)">{{ q }}</a>
+        </li>
+      </ul>
+    </section>
+    <footer class="primary">
+      <v-text-field
+        v-model="query"
+        label="Or ask me something!"
+        color="warning"
+        filled
+        dark
+        type="text"
+        placeholder="type your question here..."
+        append-icon="mdi-send"
+        @keyup.enter="submitQuestion(false)"
+        @click:append="submitQuestion(false)"
+      />
 
-    <v-btn
-      color="primary"
-      ripple
-      href
-      rounded
-      @click.prevent="navigate('MentalHealthOptions')"
-    >
-      Help!
-    </v-btn>
-    <span class="secondary--text">Everything is awful and I'm not OK!</span>
+      <div class="help-section">
+        <v-btn
+          color="secondary"
+          ripple
+          href
+          rounded
+          @click.prevent="navigate('MentalHealthOptions')"
+        >
+          Help!
+        </v-btn>
+        <span class="white--text">Everything is awful and I'm not OK!</span>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -57,4 +69,37 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.home {
+  height: 100vh;
+
+  &__content {
+    padding: 20px;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    margin: 30px 0 5px;
+  }
+
+  ul {
+    background-color: $lightGrey;
+    list-style: none;
+    padding: 20px;
+
+    li {
+      margin-bottom: 5px;
+    }
+  }
+
+  footer {
+    bottom: 0;
+    padding: 10px;
+    position: fixed;
+    width: 100vw;
+  }
+}
+</style>
