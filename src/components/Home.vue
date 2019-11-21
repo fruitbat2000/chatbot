@@ -28,27 +28,20 @@
         @click:append="submitQuestion(false)"
       />
 
-      <div class="help-section">
-        <v-btn
-          color="secondary"
-          ripple
-          href
-          rounded
-          @click.prevent="navigate('MentalHealthOptions')"
-        >
-          Help!
-        </v-btn>
-        <span class="white--text">Everything is awful and I'm not OK!</span>
-      </div>
+      <help-bar></help-bar>
     </footer>
   </div>
 </template>
 
 <script>
+import HelpBar from './shared/HelpBar.vue'
 import { ref } from '@vue/composition-api'
 
 export default {
   name: 'Home',
+  components: {
+    HelpBar
+  },
   setup(props, context) {
     const store = context.root.$store
     const query = ref('')
