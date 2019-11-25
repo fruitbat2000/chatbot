@@ -1,7 +1,7 @@
 <template>
   <div class="breathe">
     <template v-if="!breathing">
-      <h2 class="primary--text">And... Breathe</h2>
+      <h2 class="primary--text">and... breathe</h2>
       <p>
         Focussing on your breathing is a great way to clear your mind and fight
         any physical symptoms of anxiety. The breathing exercise offered here is
@@ -17,8 +17,13 @@
         <div class="breath" :class="stage"></div>
       </section>
       <section class="counter">
-        <p>
-          {{ stage }} <span v-if="visibleCount > 1">{{ visibleCount }}</span>
+        <p class="secondary--text text--lighten-1">
+          {{ stage }} ...
+          <span
+            :class="{ hidden: visibleCount <= 1 }"
+            class="accent--text text--lighten-1"
+            >{{ visibleCount }}</span
+          >
         </p>
       </section>
     </template>
@@ -119,7 +124,24 @@ export default {
 
   .counter {
     bottom: 0;
+    left: 0;
     position: fixed;
+    width: 100%;
+
+    p {
+      font-size: 24px;
+      text-align: center;
+
+      span {
+        display: inline-block;
+        font-weight: bold;
+        width: 30px;
+      }
+
+      .hidden {
+        opacity: 0;
+      }
+    }
   }
 }
 </style>

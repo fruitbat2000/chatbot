@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <section class="home__content">
-      <h2 class="primary--text">Hi, how can I help?</h2>
+      <h2 class="primary--text">hi, how can I help?</h2>
       <p>
         I'm a chatbot and I'll do my best to answer your questions, but if I
         can't you can still contact a real person using the contact info here.

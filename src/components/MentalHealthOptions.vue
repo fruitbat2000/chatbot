@@ -1,6 +1,6 @@
 <template>
   <div class="mental-health-options">
-    <h2 class="primary--text">Everything is going to be OK (eventually)</h2>
+    <h2 class="primary--text">everything is going to be OK (eventually)</h2>
     <p>
       If you're feeling overwhelmed and out of control right now, then don't
       worry; a lot of the people who talk to me feel the same way. It can be
