@@ -1,18 +1,27 @@
 <template>
   <div class="breathe">
-    <h2 class="primary--text">And... Breathe</h2>
-    <p v-if="!breathing">
-      Focussing on your breathing is a great way to clear your mind and fight
-      any physical symptoms of anxiety. The breathing exercise offered here is a
-      version of a Kumbhaka practice used in Hatha Yoga - follow along with the
-      count and allow your mind to empty of anything except the breath.
-    </p>
-    <v-btn v-if="!breathing" rounded color="primary" @click="startLoop"
-      >Start the practice</v-btn
-    >
-    <p>
-      {{ stage }} <span v-if="visibleCount > 1">{{ visibleCount }}</span>
-    </p>
+    <template v-if="!breathing">
+      <h2 class="primary--text">And... Breathe</h2>
+      <p>
+        Focussing on your breathing is a great way to clear your mind and fight
+        any physical symptoms of anxiety. The breathing exercise offered here is
+        a version of a Kumbhaka practice used in Hatha Yoga - follow along with
+        the count and allow your mind to empty of anything except the breath.
+      </p>
+      <v-btn rounded color="primary" @click="startLoop"
+        >Start the practice</v-btn
+      >
+    </template>
+    <template v-else>
+      <section class="animation">
+        <div class="breath" :class="stage"></div>
+      </section>
+      <section class="counter">
+        <p>
+          {{ stage }} <span v-if="visibleCount > 1">{{ visibleCount }}</span>
+        </p>
+      </section>
+    </template>
   </div>
 </template>
 
@@ -70,5 +79,47 @@ export default {
 <style scoped lang="scss">
 .breathe {
   padding: 20px;
+  position: relative;
+
+  .animation {
+    height: 100vh;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100vw;
+
+    .breath {
+      background-color: lighten($accent, 30%);
+      border-radius: 50%;
+      height: 50px;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+
+      &.inhale {
+        height: calc(100vw - 40px);
+        transition: all 4s linear;
+        width: calc(100vw - 40px);
+      }
+
+      &.hold {
+        height: calc(100vw - 40px);
+        width: calc(100vw - 40px);
+      }
+
+      &.exhale {
+        height: 50px;
+        transition: all 7.5s linear;
+        width: 50px;
+      }
+    }
+  }
+
+  .counter {
+    bottom: 0;
+    position: fixed;
+  }
 }
 </style>
