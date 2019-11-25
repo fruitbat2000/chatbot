@@ -15,7 +15,7 @@ export default new Vuex.Store({
       'Can you find me a place to stay?',
       "Should I tell my family that I'm LGBTQ+?",
       'How do I become an akt volunteer?',
-      'How do I access mentoring services',
+      'How do I access mentoring services?',
       'Where does my donation go?'
     ]
   },
