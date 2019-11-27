@@ -26,10 +26,13 @@ export default {
   setup(props, context) {
     const store = context.root.$store
 
-    store.dispatch('cbt/fetchConfig')
     function startFlow() {
       console.log('startFlow')
     }
+
+    store.dispatch('cbt/fetchConfig').then(() => {
+      store.dispatch('cbt/fetchQuestion', store.state.cbt.config.entryPoint)
+    })
 
     return { startFlow }
   }
