@@ -6,7 +6,12 @@
 
 <script>
 export default {
-  name: 'Cbt'
+  name: 'Cbt',
+  setup(props, context) {
+    const store = context.root.$store
+
+    store.dispatch('cbt/fetchConfig')
+  }
 }
 </script>
 

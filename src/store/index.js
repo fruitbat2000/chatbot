@@ -9,6 +9,7 @@ const debug = process.env.NODE_ENV === 'development'
 
 export default new Vuex.Store({
   state: {
+    db: null,
     currentView: 'Home',
     chatbotOpen: false,
     commonlyAsked: [
@@ -20,6 +21,10 @@ export default new Vuex.Store({
     ]
   },
   mutations: {
+    setDbInstance(state, payload) {
+      debug && console.log('setDbInstance', state, payload)
+      state.db = payload
+    },
     navigate(state, payload) {
       debug && console.log('navigate', state, payload)
       state.currentView = payload
