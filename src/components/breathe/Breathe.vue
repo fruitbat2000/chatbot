@@ -36,47 +36,51 @@ import { ref } from '@vue/composition-api'
 export default {
   name: 'Breathe',
   setup() {
-    let timer = false
     let stage = ref('')
-    let count = 0
     let visibleCount = ref(1)
     let breathing = ref(false)
 
     const startLoop = function() {
       breathing.value = true
-
-      timer = setInterval(() => {
-        switch (count) {
-          case 0:
-            stage.value = 'inhale'
-            visibleCount.value = 1
-            count++
-            break
-          case 4:
-            stage.value = 'hold'
-            visibleCount.value = 1
-            count++
-            break
-          case 8:
-            stage.value = 'exhale'
-            visibleCount.value = 1
-            count++
-            break
-          case 16:
-            count = 0
-            stage.value = 'inhale'
-            visibleCount.value = 1
-            count++
-            break
-          default:
-            count++
-            visibleCount.value++
-        }
-      }, 1000)
+      loop(stage, visibleCount)
     }
 
-    return { startLoop, timer, stage, visibleCount, breathing }
+    return { startLoop, stage, visibleCount, breathing }
   }
+}
+
+function loop(stage, visibleCount) {
+  let timer // eslint-disable-line
+  let count = 0
+
+  timer = setInterval(() => {
+    switch (count) {
+      case 0:
+        stage.value = 'inhale'
+        visibleCount.value = 1
+        count++
+        break
+      case 4:
+        stage.value = 'hold'
+        visibleCount.value = 1
+        count++
+        break
+      case 8:
+        stage.value = 'exhale'
+        visibleCount.value = 1
+        count++
+        break
+      case 16:
+        count = 0
+        stage.value = 'inhale'
+        visibleCount.value = 1
+        count++
+        break
+      default:
+        count++
+        visibleCount.value++
+    }
+  }, 1000)
 }
 </script>
 
