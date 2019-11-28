@@ -50,6 +50,7 @@ export default {
     console.log(state)
 
     function startFlow() {
+      // looks like this may not need to exist
       console.log('startFlow', state)
       intro.value = false
     }
@@ -63,7 +64,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .cbt {
   padding: 20px;

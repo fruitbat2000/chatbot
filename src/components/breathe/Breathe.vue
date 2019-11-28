@@ -84,7 +84,6 @@ function loop(stage, visibleCount) {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .breathe {
   padding: 20px;
