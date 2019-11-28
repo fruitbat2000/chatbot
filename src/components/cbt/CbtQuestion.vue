@@ -10,6 +10,22 @@
           <p>{{ msg }}</p>
         </li>
       </ul>
+
+      <template v-if="question.type === 'slider'">
+        <v-slider
+          color="secondary"
+          :max="question.sliderOptions.length"
+          min="1"
+          step="1"
+          ticks
+          v-model="sliderValue"
+        >
+        </v-slider>
+        <v-btn rounded color="primary">{{
+          question.sliderOptions[sliderValue - 1]
+        }}</v-btn>
+      </template>
+
       <ul v-if="question.optionList" class="cbt__question__answers">
         <li
           v-for="(option, i) in question.optionList"
@@ -45,6 +61,7 @@ export default {
   setup(props, context) {
     const selectedOption = ref(null)
     const store = context.root.$store
+    const sliderValue = ref(2)
 
     const messages = computed(() => {
       return props.question.messages.map(msg =>
@@ -62,7 +79,7 @@ export default {
       }
     )
 
-    return { selectedOption, messages }
+    return { selectedOption, messages, sliderValue }
   }
 }
 </script>
@@ -71,6 +88,7 @@ export default {
 .cbt__question {
   ul {
     list-style: none;
+    padding: 0;
   }
 }
 </style>
