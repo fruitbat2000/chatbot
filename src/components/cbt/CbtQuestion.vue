@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import useExtractExpression from '../../use/useExtractExpression'
 import { ref, watch, computed } from '@vue/composition-api'
 
 export default {
@@ -42,7 +43,7 @@ export default {
 
     const messages = computed(() => {
       return props.question.messages.map(msg =>
-        extractExpression(msg, props.responses)
+        useExtractExpression(msg, props.responses)
       )
     })
 
@@ -58,25 +59,6 @@ export default {
 
     return { selectedOption, messages }
   }
-}
-
-function extractExpression(str, responses) {
-  if (!str) {
-    return
-  }
-
-  const regex = /{.*?}/g
-  const matches = str.match(regex)
-
-  for (var m in matches) {
-    const prop = matches[m].replace(/[{}]/g, '')
-    let expr = responses.filter(obj => obj.type === prop)
-    expr = expr[0].text
-
-    str = str.replace(matches[m], expr)
-  }
-
-  return str
 }
 </script>
 
