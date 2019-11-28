@@ -21,35 +21,28 @@
           v-model="sliderValue"
         >
         </v-slider>
-        <v-btn rounded color="primary">{{
-          question.sliderOptions[sliderValue - 1]
-        }}</v-btn>
+        <v-btn
+          @click="submitResponse(question.sliderOptions[sliderValue - 1])"
+          rounded
+          color="primary"
+          >{{ question.sliderOptions[sliderValue - 1].text }}</v-btn
+        >
       </template>
 
-      <ul v-if="question.optionList" class="cbt__question__answers">
-        <li
-          v-for="(option, i) in question.optionList"
-          :key="i"
-          :class="option.type"
-        >
-          <label :for="`input-${option.type}-${i}`">
-            <input
-              type="radio"
-              :id="`input-${option.type}-${i}`"
-              v-model="selectedOption"
-              :value="option"
-            />
-            {{ option.text }}
-          </label>
-        </li>
-      </ul>
+      <option-list
+        v-if="question.optionList"
+        class="cbt__question__options"
+        :options="question.optionList"
+        @optionSelected="submitResponse"
+      ></option-list>
     </v-skeleton-loader>
   </section>
 </template>
 
 <script>
 import useExtractExpression from '../../use/useExtractExpression'
-import { ref, watch, computed } from '@vue/composition-api'
+import OptionList from '../shared/OptionList.vue'
+import { ref, computed } from '@vue/composition-api'
 
 export default {
   name: 'CbtQuestion',
@@ -57,6 +50,9 @@ export default {
     question: Object,
     loading: Boolean,
     responses: Array
+  },
+  components: {
+    OptionList
   },
   setup(props, context) {
     const selectedOption = ref(null)
@@ -69,17 +65,12 @@ export default {
       )
     })
 
-    watch(
-      () => selectedOption.value,
-      newVal => {
-        if (newVal) {
-          store.dispatch('cbt/fetchQuestion', newVal.nextQuestion)
-          store.commit('cbt/updateResponses', newVal)
-        }
-      }
-    )
+    function submitResponse(response) {
+      store.dispatch('cbt/fetchQuestion', response.nextQuestion)
+      store.commit('cbt/updateResponses', response)
+    }
 
-    return { selectedOption, messages, sliderValue }
+    return { selectedOption, messages, sliderValue, submitResponse }
   }
 }
 </script>
