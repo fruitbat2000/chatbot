@@ -2,8 +2,9 @@ const debug = process.env.NODE_ENV === 'development'
 
 const state = {
   config: null,
-  currentQuestion: null,
-  dbError: false
+  currentQuestion: {},
+  dbError: false,
+  questionLoading: true
 }
 const getters = {}
 const actions = {
@@ -25,11 +26,13 @@ const actions = {
   },
   fetchQuestion({ commit, rootState }, payload) {
     const docRef = rootState.db.collection('cbtQuestions').doc(payload)
+    commit('setLoading', true)
 
     docRef
       .get()
       .then(doc => {
         commit('setCurrentQuestion', doc.data())
+        commit('setLoading', false)
       })
       .catch(err => {
         console.log(err)
@@ -49,6 +52,10 @@ const mutations = {
   setDbError(state, payload) {
     debug && console.log('setDbError', state, payload)
     state.dbError = payload
+  },
+  setLoading(state, payload) {
+    debug && console.log('setLoading', state, payload)
+    state.questionLoading = payload
   }
 }
 
