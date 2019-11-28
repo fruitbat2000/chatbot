@@ -35,6 +35,30 @@
         :options="question.optionList"
         @optionSelected="submitResponse"
       ></option-list>
+
+      <v-textarea
+        v-if="question.type === 'freeText'"
+        v-model="freeText"
+        loading
+        no-resize
+      >
+        <template v-slot:progress>
+          <v-progress-linear
+            :value="freeTextProgress"
+            absolute
+          ></v-progress-linear>
+        </template>
+        <template v-slot:append-outer>
+          <v-btn
+            fab
+            color="secondary"
+            small
+            :disabled="freeTextProgress < 100"
+            @click="submitResponse(question.submitObj)"
+            ><v-icon>mdi-send</v-icon></v-btn
+          >
+        </template>
+      </v-textarea>
     </v-skeleton-loader>
   </section>
 </template>
@@ -58,6 +82,11 @@ export default {
     const selectedOption = ref(null)
     const store = context.root.$store
     const sliderValue = ref(2)
+    const freeText = ref('')
+
+    const freeTextProgress = computed(() => {
+      return (freeText.value.length / 60) * 100
+    })
 
     const messages = computed(() => {
       return props.question.messages.map(msg =>
@@ -70,7 +99,14 @@ export default {
       store.commit('cbt/updateResponses', response)
     }
 
-    return { selectedOption, messages, sliderValue, submitResponse }
+    return {
+      selectedOption,
+      messages,
+      sliderValue,
+      submitResponse,
+      freeText,
+      freeTextProgress
+    }
   }
 }
 </script>
