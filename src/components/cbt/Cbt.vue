@@ -25,6 +25,7 @@
       v-else
       :question="currentQuestion"
       :loading="questionLoading"
+      :responses="responses"
     />
   </div>
 </template>
@@ -43,7 +44,7 @@ export default {
     const store = context.root.$store
     let intro = ref(true)
     let state = {
-      ...useState('cbt', ['currentQuestion', 'questionLoading'])
+      ...useState('cbt', ['currentQuestion', 'questionLoading', 'responses'])
     }
 
     console.log(state)

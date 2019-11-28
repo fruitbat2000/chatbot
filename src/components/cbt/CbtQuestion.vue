@@ -1,8 +1,11 @@
 <template>
   <div class="cbt__question">
     <div v-if="loading" class="cbt__question__loading">Loading</div>
-    <h2 class="primary--text">{{ question.text }}</h2>
-    <p>{{ question.subtext }}</p>
+    <ul class="cbt__message__list">
+      <li v-for="(msg, i) in messages" :key="i">
+        <p>{{ msg }}</p>
+      </li>
+    </ul>
     <ul v-if="question.optionList" class="cbt__question__answers">
       <li
         v-for="(option, i) in question.optionList"
@@ -24,30 +27,56 @@
 </template>
 
 <script>
-import { ref, watch } from '@vue/composition-api'
+import { ref, watch, computed } from '@vue/composition-api'
 
 export default {
   name: 'CbtQuestion',
   props: {
     question: Object,
-    loading: Boolean
+    loading: Boolean,
+    responses: Array
   },
   setup(props, context) {
-    const selectedOption = ref('')
+    const selectedOption = ref(null)
     const store = context.root.$store
+
+    const messages = computed(() => {
+      return props.question.messages.map(msg =>
+        extractExpression(msg, props.responses)
+      )
+    })
 
     watch(
       () => selectedOption.value,
       newVal => {
-        console.log(newVal)
-        if (newVal.nextQuestion) {
+        if (newVal) {
           store.dispatch('cbt/fetchQuestion', newVal.nextQuestion)
+          store.commit('cbt/updateResponses', newVal)
         }
       }
     )
 
-    return { selectedOption }
+    return { selectedOption, messages }
   }
+}
+
+function extractExpression(str, responses) {
+  if (!str) {
+    return
+  }
+
+  const regex = /{.*?}/g
+  const matches = str.match(regex)
+
+  for (var m in matches) {
+    const prop = matches[m].replace(/[{}]/g, '')
+    let expr = responses.filter(obj => obj.type === prop)
+    expr = expr[0].text
+
+    str = str.replace(matches[m], expr)
+  }
+
+  return str
 }
 </script>
 

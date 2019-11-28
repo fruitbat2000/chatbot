@@ -4,7 +4,8 @@ const state = {
   config: null,
   currentQuestion: {},
   dbError: false,
-  questionLoading: true
+  questionLoading: true,
+  responses: []
 }
 const getters = {}
 const actions = {
@@ -56,6 +57,10 @@ const mutations = {
   setLoading(state, payload) {
     debug && console.log('setLoading', state, payload)
     state.questionLoading = payload
+  },
+  updateResponses(state, payload) {
+    debug && console.log('updateResponses', state, payload)
+    state.responses.push(payload)
   }
 }
 
