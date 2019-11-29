@@ -5,12 +5,15 @@
       type="list-item-avatar-three-line"
       class="cbt__question__loading"
     >
-      <ul class="cbt__message__list">
+      <ul class="cbt__question__message__list">
         <li v-for="(msg, i) in messages" :key="i">
-          <p>{{ msg }}</p>
+          <v-card class="pa-3 mb-3" shaped flat>
+            <p class="mb-0">{{ msg }}</p>
+          </v-card>
         </li>
       </ul>
-
+    </v-skeleton-loader>
+    <div class="cbt__question__response">
       <template v-if="question.type === 'slider'">
         <v-slider
           color="secondary"
@@ -19,14 +22,12 @@
           step="1"
           ticks
           v-model="sliderValue"
-        >
-        </v-slider>
+        ></v-slider>
         <v-btn
           @click="submitResponse(question.sliderOptions[sliderValue - 1])"
           rounded
           color="primary"
-          >{{ question.sliderOptions[sliderValue - 1].text }}</v-btn
-        >
+        >{{ question.sliderOptions[sliderValue - 1].text }}</v-btn>
       </template>
 
       <option-list
@@ -36,17 +37,9 @@
         @optionSelected="submitResponse"
       ></option-list>
 
-      <v-textarea
-        v-if="question.type === 'freeText'"
-        v-model="freeText"
-        loading
-        no-resize
-      >
+      <v-textarea v-if="question.type === 'freeText'" v-model="freeText" loading no-resize>
         <template v-slot:progress>
-          <v-progress-linear
-            :value="freeTextProgress"
-            absolute
-          ></v-progress-linear>
+          <v-progress-linear :value="freeTextProgress" absolute></v-progress-linear>
         </template>
         <template v-slot:append-outer>
           <v-btn
@@ -55,11 +48,12 @@
             small
             :disabled="freeTextProgress < 100"
             @click="submitResponse(question.submitObj)"
-            ><v-icon>mdi-send</v-icon></v-btn
           >
+            <v-icon>mdi-send</v-icon>
+          </v-btn>
         </template>
       </v-textarea>
-    </v-skeleton-loader>
+    </div>
   </section>
 </template>
 
@@ -113,9 +107,28 @@ export default {
 
 <style scoped lang="scss">
 .cbt__question {
+  background-color: $surface;
+  height: 100vh;
+
   ul {
     list-style: none;
-    padding: 0;
+  }
+
+  &__message__list {
+    padding: 20px;
+
+    li {
+      max-width: 70vw;
+    }
+  }
+
+  &__response {
+    background-color: white;
+    bottom: 0;
+    left: 0;
+    padding: 20px;
+    position: fixed;
+    width: 100vw;
   }
 }
 </style>
