@@ -1,14 +1,10 @@
 <template>
   <section class="cbt__question">
-    <v-skeleton-loader
-      :loading="loading"
-      type="list-item-avatar-three-line"
-      class="cbt__question__loading"
-    >
+    <v-skeleton-loader type="list-item-avatar-three-line" class="cbt__question__loading">
       <ul class="cbt__question__message__list">
-        <li v-for="(msg, i) in messages" :key="i">
+        <li v-for="(msg, i) in transformedMessages" :key="i" :class="{user: msg.userResponse}">
           <v-card class="pa-3 mb-3" shaped flat>
-            <p class="mb-0">{{ msg }}</p>
+            <p class="mb-0">{{ msg.text }}</p>
           </v-card>
         </li>
       </ul>
@@ -61,6 +57,7 @@
 import useExtractExpression from '../../use/useExtractExpression'
 import OptionList from '../shared/OptionList.vue'
 import { ref, computed } from '@vue/composition-api'
+import { useGetters } from '@u3u/vue-hooks'
 
 export default {
   name: 'CbtQuestion',
@@ -82,11 +79,8 @@ export default {
       return (freeText.value.length / 60) * 100
     })
 
-    const messages = computed(() => {
-      return props.question.messages.map(msg =>
-        useExtractExpression(msg, props.responses)
-      )
-    })
+    const messages = useGetters('cbt', ['transformedMessages'])
+    console.log(messages)
 
     function submitResponse(response) {
       store.dispatch('cbt/fetchQuestion', response.nextQuestion)
@@ -95,7 +89,7 @@ export default {
 
     return {
       selectedOption,
-      messages,
+      ...messages,
       sliderValue,
       submitResponse,
       freeText,
@@ -115,10 +109,17 @@ export default {
   }
 
   &__message__list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
     padding: 20px;
 
     li {
       max-width: 70vw;
+
+      &.user {
+        align-self: flex-end;
+      }
     }
   }
 

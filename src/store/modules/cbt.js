@@ -1,3 +1,4 @@
+import useExtractExpression from '../../use/useExtractExpression'
 const debug = process.env.NODE_ENV === 'development'
 
 const state = {
@@ -5,9 +6,26 @@ const state = {
   currentQuestion: {},
   dbError: false,
   questionLoading: true,
-  responses: []
+  responses: [],
+  messages: []
 }
-const getters = {}
+const getters = {
+  transformedMessages: state => {
+    let extracted = []
+    state.messages.forEach(msg => {
+      msg.text = useExtractExpression(msg.text, state.responses)
+      extracted.push(msg)
+    })
+
+    extracted = extracted.concat(state.responses)
+
+    extracted = extracted.sort((a, b) => {
+      return a.timestamp - b.timestamp
+    })
+
+    return extracted
+  }
+}
 const actions = {
   fetchConfig({ commit, rootState }) {
     const config = rootState.db.collection('cbtConfig')
@@ -33,6 +51,7 @@ const actions = {
       .get()
       .then(doc => {
         commit('setCurrentQuestion', doc.data())
+        commit('updateMessages', doc.data().messages)
         commit('setLoading', false)
       })
       .catch(err => {
@@ -60,7 +79,20 @@ const mutations = {
   },
   updateResponses(state, payload) {
     debug && console.log('updateResponses', state, payload)
+    payload.userResponse = true
+    payload.timestamp = Date.now()
     state.responses.push(payload)
+  },
+  updateMessages(state, payload) {
+    debug && console.log('updateMessages', state, payload)
+    payload.forEach(msg => {
+      let obj = {
+        text: msg,
+        timestamp: Date.now()
+      }
+
+      state.messages.push(obj)
+    })
   }
 }
 
