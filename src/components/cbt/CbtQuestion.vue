@@ -49,6 +49,7 @@
           v-model="freeText"
           loading
           no-resize
+          :label="question.freeTextLabel"
         >
           <template v-slot:progress>
             <v-progress-linear
@@ -101,9 +102,12 @@ export default {
     })
 
     const messages = useGetters('cbt', ['transformedMessages'])
-    console.log(messages)
 
     function submitResponse(response) {
+      if (props.question.type === 'freeText') {
+        response.text = freeText.value
+      }
+
       store.dispatch('cbt/fetchQuestion', response.nextQuestion)
       store.commit('cbt/updateResponses', response)
     }
