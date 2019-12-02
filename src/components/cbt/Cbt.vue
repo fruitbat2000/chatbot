@@ -10,16 +10,17 @@
         framework for dealing with negative emotion. The more you do it, the
         more it becomes second nature so if you're interested, I suggest you
         check out a tool such as
-        <a
-          href="https://www.youper.ai/"
-        >Youper</a> to continue practicing on a regular basis.
+        <a href="https://www.youper.ai/">Youper</a> to continue practicing on a
+        regular basis.
       </p>
       <p>
         Before we start, I'd like to reassure you that none of the information
         you share within this part of the chatbot is stored and as soon as you
         refresh the page or close the chat window, your session will be deleted.
       </p>
-      <v-btn color="primary" @click="startFlow" rounded>Let's get started</v-btn>
+      <v-btn color="primary" @click="startFlow" rounded
+        >Let's get started</v-btn
+      >
     </section>
     <cbt-question
       v-else

@@ -1,8 +1,15 @@
 <template>
   <section class="cbt__question">
-    <v-skeleton-loader type="list-item-avatar-three-line" class="cbt__question__loading">
+    <v-skeleton-loader
+      type="list-item-avatar-three-line"
+      class="cbt__question__loading"
+    >
       <ul class="cbt__question__message__list">
-        <li v-for="(msg, i) in transformedMessages" :key="i" :class="{user: msg.userResponse}">
+        <li
+          v-for="(msg, i) in transformedMessages"
+          :key="i"
+          :class="{ user: msg.userResponse }"
+        >
           <v-card class="pa-3 mb-3" shaped flat>
             <p class="mb-0">{{ msg.text }}</p>
           </v-card>
@@ -23,7 +30,8 @@
           @click="submitResponse(question.sliderOptions[sliderValue - 1])"
           rounded
           color="primary"
-        >{{ question.sliderOptions[sliderValue - 1].text }}</v-btn>
+          >{{ question.sliderOptions[sliderValue - 1].text }}</v-btn
+        >
       </template>
 
       <option-list
@@ -33,9 +41,17 @@
         @optionSelected="submitResponse"
       ></option-list>
 
-      <v-textarea v-if="question.type === 'freeText'" v-model="freeText" loading no-resize>
+      <v-textarea
+        v-if="question.type === 'freeText'"
+        v-model="freeText"
+        loading
+        no-resize
+      >
         <template v-slot:progress>
-          <v-progress-linear :value="freeTextProgress" absolute></v-progress-linear>
+          <v-progress-linear
+            :value="freeTextProgress"
+            absolute
+          ></v-progress-linear>
         </template>
         <template v-slot:append-outer>
           <v-btn
