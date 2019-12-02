@@ -54,7 +54,6 @@
 </template>
 
 <script>
-import useExtractExpression from '../../use/useExtractExpression'
 import OptionList from '../shared/OptionList.vue'
 import { ref, computed } from '@vue/composition-api'
 import { useGetters } from '@u3u/vue-hooks'

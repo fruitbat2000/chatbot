@@ -10,8 +10,9 @@
         framework for dealing with negative emotion. The more you do it, the
         more it becomes second nature so if you're interested, I suggest you
         check out a tool such as
-        <a href="https://www.youper.ai/">Youper</a> to
-        continue practicing on a regular basis.
+        <a
+          href="https://www.youper.ai/"
+        >Youper</a> to continue practicing on a regular basis.
       </p>
       <p>
         Before we start, I'd like to reassure you that none of the information

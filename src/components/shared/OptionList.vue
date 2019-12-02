@@ -39,7 +39,6 @@ export default {
         case 'stressed':
         case 'annoyed':
           return 'error darken-2'
-          break
         case 'insecure':
         case 'anxious':
         case 'afraid':
@@ -47,17 +46,14 @@ export default {
         case 'ashamed':
         case 'depressed':
           return 'primary'
-          break
         case 'okay':
         case 'numb':
         case 'tired':
           return '#dcdcdc'
-          break
         case 'calm':
         case 'optimistic':
         case 'happy':
           return 'warning'
-          break
         default:
           return 'secondary'
       }
