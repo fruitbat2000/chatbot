@@ -78,6 +78,7 @@ export default {
 .option-list {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
   margin-right: -10px;
   padding: 0;
 

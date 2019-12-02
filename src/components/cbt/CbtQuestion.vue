@@ -1,76 +1,81 @@
 <template>
-  <section class="cbt__question">
-    <v-skeleton-loader
-      type="list-item-avatar-three-line"
-      class="cbt__question__loading"
-    >
-      <ul class="cbt__question__message__list">
-        <li
-          v-for="(msg, i) in transformedMessages"
-          :key="i"
-          :class="{ user: msg.userResponse }"
-        >
-          <v-card class="pa-3 mb-3" shaped flat>
-            <p class="mb-0">{{ msg.text }}</p>
-          </v-card>
-        </li>
-      </ul>
-    </v-skeleton-loader>
-    <div class="cbt__question__response">
-      <template v-if="question.type === 'slider'">
-        <v-slider
-          color="secondary"
-          :max="question.sliderOptions.length"
-          min="1"
-          step="1"
-          ticks
-          v-model="sliderValue"
-        ></v-slider>
-        <v-btn
-          @click="submitResponse(question.sliderOptions[sliderValue - 1])"
-          rounded
-          color="primary"
-          >{{ question.sliderOptions[sliderValue - 1].text }}</v-btn
-        >
-      </template>
-
-      <option-list
-        v-if="question.optionList"
-        class="cbt__question__options"
-        :options="question.optionList"
-        @optionSelected="submitResponse"
-      ></option-list>
-
-      <v-textarea
-        v-if="question.type === 'freeText'"
-        v-model="freeText"
-        loading
-        no-resize
+  <chat-window class="cbt__question">
+    <template v-slot:history>
+      <v-skeleton-loader
+        type="list-item-avatar-three-line"
+        class="cbt__question__loading"
       >
-        <template v-slot:progress>
-          <v-progress-linear
-            :value="freeTextProgress"
-            absolute
-          ></v-progress-linear>
-        </template>
-        <template v-slot:append-outer>
-          <v-btn
-            fab
-            color="secondary"
-            small
-            :disabled="freeTextProgress < 100"
-            @click="submitResponse(question.submitObj)"
+        <ul class="cbt__question__message__list">
+          <li
+            v-for="(msg, i) in transformedMessages"
+            :key="i"
+            :class="{ user: msg.userResponse }"
           >
-            <v-icon>mdi-send</v-icon>
-          </v-btn>
+            <v-card class="pa-3 mb-3" shaped flat>
+              <p class="mb-0">{{ msg.text }}</p>
+            </v-card>
+          </li>
+        </ul>
+      </v-skeleton-loader>
+    </template>
+    <template v-slot:interactive>
+      <div class="cbt__question__response">
+        <template v-if="question.type === 'slider'">
+          <v-slider
+            color="secondary"
+            :max="question.sliderOptions.length"
+            min="1"
+            step="1"
+            ticks
+            v-model="sliderValue"
+          ></v-slider>
+          <v-btn
+            @click="submitResponse(question.sliderOptions[sliderValue - 1])"
+            rounded
+            color="primary"
+            >{{ question.sliderOptions[sliderValue - 1].text }}</v-btn
+          >
         </template>
-      </v-textarea>
-    </div>
-  </section>
+
+        <option-list
+          v-if="question.optionList"
+          class="cbt__question__options"
+          :options="question.optionList"
+          @optionSelected="submitResponse"
+        ></option-list>
+
+        <v-textarea
+          v-if="question.type === 'freeText'"
+          v-model="freeText"
+          loading
+          no-resize
+        >
+          <template v-slot:progress>
+            <v-progress-linear
+              :value="freeTextProgress"
+              absolute
+            ></v-progress-linear>
+          </template>
+          <template v-slot:append-outer>
+            <v-btn
+              fab
+              color="secondary"
+              small
+              :disabled="freeTextProgress < 100"
+              @click="submitResponse(question.submitObj)"
+            >
+              <v-icon>mdi-send</v-icon>
+            </v-btn>
+          </template>
+        </v-textarea>
+      </div>
+    </template>
+  </chat-window>
 </template>
 
 <script>
 import OptionList from '../shared/OptionList.vue'
+import ChatWindow from '../shared/ChatWindow.vue'
 import { ref, computed } from '@vue/composition-api'
 import { useGetters } from '@u3u/vue-hooks'
 
@@ -82,7 +87,8 @@ export default {
     responses: Array
   },
   components: {
-    OptionList
+    OptionList,
+    ChatWindow
   },
   setup(props, context) {
     const selectedOption = ref(null)
@@ -136,15 +142,6 @@ export default {
         align-self: flex-end;
       }
     }
-  }
-
-  &__response {
-    background-color: white;
-    bottom: 0;
-    left: 0;
-    padding: 20px;
-    position: fixed;
-    width: 100vw;
   }
 }
 </style>
